@@ -28,6 +28,31 @@ Add this to your `claude_desktop_config.json`:
 }
 ```
 
+### Connect to Google Antigravity
+1. Open the **Agent session** menu (click the `...` icon at the top).
+2. Select **MCP Servers** -> **Manage MCP Servers**.
+3. Click **View raw config** to open `mcp_config.json`.
+4. Add one of the following to the `mcpServers` object:
+
+**Option A: Remote (Cloud) — Recommended**
+No download required. Uses the live DesignMind brain.
+```json
+"designmind": {
+  "type": "sse",
+  "url": "https://designmind.onrender.com/sse"
+}
+```
+
+**Option B: Local (Developer)**
+Use this if you want to modify styles or run your own instance.
+```json
+"designmind": {
+  "command": "node",
+  "args": ["/absolute/path/to/DesignMind/dist/index.js"],
+  "env": {}
+}
+```
+
 ---
 
 ## 🎨 8 Movements for the AI Era

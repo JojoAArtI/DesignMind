@@ -418,127 +418,223 @@ async function main() {
     <title>DesignMind MCP | Design Intelligence Layer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0c;
-            --text: #ffffff;
-            --accent: #3b82f6;
-            --dim: #a1a1aa;
-            --card: #18181b;
-            --border: #27272a;
+            --bg: #121212;
+            --surface: #1e1e1e;
+            --surface-alt: #252526;
+            --primary: #22d3ee;
+            --primary-hover: #06b6d4;
+            --secondary: #a78bfa;
+            --foreground: #e4e4e7;
+            --muted-foreground: #71717a;
+            --border: #3f3f46;
+            --accent: rgba(34, 211, 238, 0.1);
         }
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            margin: 0;
             background: var(--bg);
-            color: var(--text);
+            color: var(--foreground);
             font-family: 'Inter', sans-serif;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            flex-direction: column;
             overflow: hidden;
         }
-        .container {
-            max-width: 600px;
-            text-align: center;
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 2rem;
-            animation: fadeIn 1s ease-out;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            width: 100%;
+        }
+        .content-side {
+            text-align: left;
         }
         h1 {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 3rem;
-            margin-bottom: 0.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(to bottom right, #fff, #71717a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
         }
-        .status {
+        .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            padding: 0.5rem 1rem;
-            border-radius: 99px;
-            font-size: 0.875rem;
-            font-weight: 500;
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         .pulse {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
+            width: 6px;
+            height: 6px;
+            background: #4ade80;
             border-radius: 50%;
-            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
             animation: pulse 2s infinite;
         }
         p {
-            color: var(--dim);
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
+            color: var(--muted-foreground);
             font-size: 1.125rem;
+            line-height: 1.6;
+            max-width: 500px;
         }
-        .config-box {
-            background: var(--card);
+        .terminal {
+            background: #000;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: left;
-            margin-top: 2rem;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            font-family: 'JetBrains Mono', monospace;
         }
-        .label {
-            font-size: 0.75rem;
+        .terminal-header {
+            background: var(--surface-alt);
+            padding: 8px 12px;
+            display: flex;
+            gap: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+        
+        .terminal-body {
+            padding: 1.5rem;
+            color: var(--secondary);
+            font-size: 0.875rem;
+            white-space: pre;
+        }
+        .code-key { color: var(--primary); }
+        .code-string { color: #a78bfa; }
+        .code-comment { color: #3f3f46; }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background: var(--primary);
+            vertical-align: middle;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+        }
+        .config-section {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .config-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--dim);
-            margin-bottom: 1rem;
+            color: var(--muted-foreground);
+            margin-bottom: 0.75rem;
             display: block;
         }
         code {
             display: block;
-            background: #000;
-            padding: 1rem;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: #3b82f6;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
             word-break: break-all;
         }
-        .footer {
-            margin-top: 3rem;
-            font-size: 0.8rem;
-            color: #3f3f46;
+        footer {
+            height: 32px;
+            background: var(--surface-alt);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--muted-foreground);
         }
+        .footer-part { display: flex; gap: 1.5rem; }
+        .vitals { color: var(--primary); }
+
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        @media (max-width: 900px) {
+            .hero-split { grid-template-columns: 1fr; text-align: center; }
+            .content-side { display: flex; flex-direction: column; align-items: center; }
+            .terminal { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="status"><div class="pulse"></div> DESIGNMIND IS LIVE</div>
-        <h1>DesignMind</h1>
-        <p>The Design Intelligence Layer for AI Coding Tools. Encoding the philosophy and rules of design into the protocol layer.</p>
-        
-        <div class="config-box">
-            <span class="label">Your Connection URL (SSE)</span>
-            <code>${req.protocol}://${req.get('host')}/sse</code>
+    <main>
+        <div class="hero-split">
+            <div class="content-side">
+                <div class="status-badge"><div class="pulse"></div> system.live</div>
+                <h1>DesignMind</h1>
+                <p>The Design Intelligence Layer for AI Coding. Encoding philosophy directly into the protocol.</p>
+                
+                <div class="config-section">
+                    <span class="config-label">Connection URL (SSE)</span>
+                    <code>${req.protocol}://${req.get('host')}/sse</code>
+                </div>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body"><span class="code-comment">// Processing Live Design Philosophy...</span>
+{
+  <span class="code-key">"id"</span>: <span class="code-string">"dark-precision"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"Active"</span>,
+  <span class="code-key">"density"</span>: <span class="code-string">"High"</span>,
+  <span class="code-key">"intelligence"</span>: <span class="code-string">"1.0.0"</span>
+}<span class="cursor"></span></div>
+            </div>
         </div>
+    </main>
 
-        <div class="footer">
-            DesignMind v1.0.0 &bull; Model Context Protocol
+    <footer>
+        <div class="footer-part">
+            <span>DESIGNMIND V1.0.0</span>
+            <span>PROTOCOL: MCP_SSE_V1</span>
         </div>
-    </div>
+        <div class="footer-part vitals">
+            <span>LATENCY: 12ms</span>
+            <span>UPTIME: 99.9%</span>
+            <span>STATUS: OPTIMAL</span>
+        </div>
+    </footer>
 </body>
 </html>
             `);
