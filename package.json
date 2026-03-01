@@ -8,9 +8,10 @@
     "designmind-mcp": "dist/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && echo 'Build complete. Contents of dist:' && ls -R dist || dir /s dist",
     "start": "node dist/index.js",
-    "dev": "npx tsx src/index.ts"
+    "dev": "npx tsx src/index.ts",
+    "debug": "ls -R dist || dir /s dist"
   },
   "keywords": [
     "mcp",
@@ -23,11 +24,10 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
     "express": "^5.2.1",
-    "zod": "^3.24.2"
-  },
-  "devDependencies": {
+    "typescript": "^5.7.3",
     "@types/express": "^5.0.6",
     "@types/node": "^22.13.0",
-    "typescript": "^5.7.3"
-  }
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {}
 }
