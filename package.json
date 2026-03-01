@@ -1,0 +1,25 @@
+{
+  "name": "designmind-mcp",
+  "version": "1.0.0",
+  "description": "A Design Intelligence Layer for AI-Powered Development Tools — MCP Server",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "designmind-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "npx tsx src/index.ts"
+  },
+  "keywords": ["mcp", "design", "ai", "design-system", "model-context-protocol"],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.7.3"
+  }
+}
