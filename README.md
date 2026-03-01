@@ -1,4 +1,4 @@
-# DesignMind 🧠✨
+# DesignMind 
 
 **AI coding tools are aesthetically blind. DesignMind is how we give them sight.**
 
@@ -6,7 +6,7 @@ I’m tired of seeing AI build ugly things. When we ask Cursor or Claude to "mak
 
 DesignMind is a Design Intelligence Layer. It’s not a template library; it’s a living, breathing set of rules and philosophies for how things *should* feel. We've encoded the "soul" of professional design movements into a protocol that any AI can query.
 
-## 🌐 Use the Live Brain (Right Now)
+##  Use the Live Brain (Right Now)
 
 You don't need to host this yourself to start using it. I’ve deployed a public instance for everyone to plug into.
 
@@ -30,7 +30,7 @@ Add this to your `claude_desktop_config.json`:
 
 ---
 
-## 🎨 8 Movements for the AI Era
+##  8 Movements for the AI Era
 
 DesignMind launched with 8 deeply specified styles, from **Neo-Brutalism** to **Industrial Minimalism**. 
 
@@ -41,7 +41,7 @@ Each style isn't just a list of hex codes; it's a **Functional Contract**. It in
 
 ---
 
-## 🤝 Contribute: Teach the AI a New Style
+## Contribute: Teach the AI a New Style
 
 DesignMind is only as powerful as the design knowledge we feed it. We want to encode the entire history of design—from the Bauhaus movement to the latest Bento-grid trends.
 
@@ -71,7 +71,7 @@ npm run build
 # "command": "node", "args": ["/path/to/DesignMind/dist/index.js"]
 ```
 
-## 🚀 The Wisdom of Deployment (A Note from the Build)
+## The Wisdom of Deployment (A Note from the Build)
 
 If you're deploying this yourself (e.g., on Render), here’s a lesson I learned the hard way: 
 **Don't put `typescript` or `@types` in `devDependencies`.** 
@@ -82,5 +82,4 @@ Also, the **Free Tier** on Render sleeps after 15 minutes of silence. If your AI
 
 ---
 
-*Built with ❤️ for the future of AI-assisted design.*
 [GitHub](https://github.com/JojoAArtI/DesignMind)
