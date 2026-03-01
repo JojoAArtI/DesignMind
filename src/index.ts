@@ -407,6 +407,143 @@ async function main() {
             res.json({ status: 'ok', server: 'designmind', version: '1.0.0' });
         });
 
+        // Root landing page — professional "brain" status page
+        app.get('/', (req, res) => {
+            res.send(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesignMind MCP | Design Intelligence Layer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --text: #ffffff;
+            --accent: #3b82f6;
+            --dim: #a1a1aa;
+            --card: #18181b;
+            --border: #27272a;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 600px;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to bottom right, #fff, #71717a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse 2s infinite;
+        }
+        p {
+            color: var(--dim);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            font-size: 1.125rem;
+        }
+        .config-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dim);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        code {
+            display: block;
+            background: #000;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #3b82f6;
+            word-break: break-all;
+        }
+        .footer {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: #3f3f46;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status"><div class="pulse"></div> DESIGNMIND IS LIVE</div>
+        <h1>DesignMind</h1>
+        <p>The Design Intelligence Layer for AI Coding Tools. Encoding the philosophy and rules of design into the protocol layer.</p>
+        
+        <div class="config-box">
+            <span class="label">Your Connection URL (SSE)</span>
+            <code>${req.protocol}://${req.get('host')}/sse</code>
+        </div>
+
+        <div class="footer">
+            DesignMind v1.0.0 &bull; Model Context Protocol
+        </div>
+    </div>
+</body>
+</html>
+            `);
+        });
+
         // SSE endpoint — establishes the event stream
         app.get('/sse', async (req, res) => {
             console.log('SSE connection requested');
