@@ -11,6 +11,8 @@ import { createSession, logDecision, checkDrift, getSession } from './session.js
 import { runIntake } from './intake.js';
 import { validateDecision } from './validator.js';
 import { exportTokens } from './exporter.js';
+import { getLandingCSS } from './landing-styles.js';
+import { getLandingHTML } from './landing-html.js';
 
 const server = new McpServer({
     name: 'designmind',
@@ -407,234 +409,24 @@ async function main() {
             res.json({ status: 'ok', server: 'designmind', version: '1.0.0' });
         });
 
-        // Root landing page — professional "brain" status page
+        // Root landing page — comprehensive design intelligence showcase
         app.get('/', (req, res) => {
+            const sseUrl = `${req.protocol}://${req.get('host')}/sse`;
             res.send(`
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DesignMind MCP | Design Intelligence Layer</title>
+    <title>DesignMind MCP | Design Intelligence Layer for AI</title>
+    <meta name="description" content="The Design Intelligence Layer for AI-Powered Development. 7 design styles, 10 domain profiles, 13 MCP tools — encoding philosophy directly into the protocol.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #121212;
-            --surface: #1e1e1e;
-            --surface-alt: #252526;
-            --primary: #22d3ee;
-            --primary-hover: #06b6d4;
-            --secondary: #a78bfa;
-            --foreground: #e4e4e7;
-            --muted-foreground: #71717a;
-            --border: #3f3f46;
-            --accent: rgba(34, 211, 238, 0.1);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: var(--bg);
-            color: var(--foreground);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8125rem;
-            line-height: 1.5;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        .hero-split {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            width: 100%;
-        }
-        .content-side {
-            text-align: left;
-        }
-        h1 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 3rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-            color: #fff;
-        }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(74, 222, 128, 0.1);
-            color: #4ade80;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .pulse {
-            width: 6px;
-            height: 6px;
-            background: #4ade80;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        p {
-            color: var(--muted-foreground);
-            font-size: 1.125rem;
-            line-height: 1.6;
-            max-width: 500px;
-        }
-        .terminal {
-            background: #000;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .terminal-header {
-            background: var(--surface-alt);
-            padding: 8px 12px;
-            display: flex;
-            gap: 6px;
-            border-bottom: 1px solid var(--border);
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot.red { background: #ff5f56; }
-        .dot.yellow { background: #ffbd2e; }
-        .dot.green { background: #27c93f; }
-        
-        .terminal-body {
-            padding: 1.5rem;
-            color: var(--secondary);
-            font-size: 0.875rem;
-            white-space: pre;
-        }
-        .code-key { color: var(--primary); }
-        .code-string { color: #a78bfa; }
-        .code-comment { color: #3f3f46; }
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 1.2em;
-            background: var(--primary);
-            vertical-align: middle;
-            margin-left: 4px;
-            animation: blink 1s step-end infinite;
-        }
-        .config-section {
-            width: 100%;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-        .config-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--muted-foreground);
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-        code {
-            display: block;
-            color: var(--primary);
-            font-family: 'JetBrains Mono', monospace;
-            word-break: break-all;
-        }
-        footer {
-            height: 32px;
-            background: var(--surface-alt);
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6875rem;
-            color: var(--muted-foreground);
-        }
-        .footer-part { display: flex; gap: 1.5rem; }
-        .vitals { color: var(--primary); }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-        @media (max-width: 900px) {
-            .hero-split { grid-template-columns: 1fr; text-align: center; }
-            .content-side { display: flex; flex-direction: column; align-items: center; }
-            .terminal { display: none; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>${getLandingCSS()}</style>
 </head>
 <body>
-    <main>
-        <div class="hero-split">
-            <div class="content-side">
-                <div class="status-badge"><div class="pulse"></div> system.live</div>
-                <h1>DesignMind</h1>
-                <p>The Design Intelligence Layer for AI Coding. Encoding philosophy directly into the protocol.</p>
-                
-                <div class="config-section">
-                    <span class="config-label">Connection URL (SSE)</span>
-                    <code>${req.protocol}://${req.get('host')}/sse</code>
-                </div>
-            </div>
-            
-            <div class="terminal">
-                <div class="terminal-header">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
-                <div class="terminal-body"><span class="code-comment">// Processing Live Design Philosophy...</span>
-{
-  <span class="code-key">"id"</span>: <span class="code-string">"dark-precision"</span>,
-  <span class="code-key">"status"</span>: <span class="code-string">"Active"</span>,
-  <span class="code-key">"density"</span>: <span class="code-string">"High"</span>,
-  <span class="code-key">"intelligence"</span>: <span class="code-string">"1.0.0"</span>
-}<span class="cursor"></span></div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="footer-part">
-            <span>DESIGNMIND V1.0.0</span>
-            <span>PROTOCOL: MCP_SSE_V1</span>
-        </div>
-        <div class="footer-part vitals">
-            <span>LATENCY: 12ms</span>
-            <span>UPTIME: 99.9%</span>
-            <span>STATUS: OPTIMAL</span>
-        </div>
-    </footer>
+${getLandingHTML(sseUrl)}
 </body>
 </html>
             `);
