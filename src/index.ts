@@ -422,7 +422,7 @@ async function main() {
     <meta name="description" content="The Design Intelligence Layer for AI-Powered Development. 7 design styles, 10 domain profiles, 13 MCP tools — encoding philosophy directly into the protocol.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>${getLandingCSS()}</style>
 </head>
 <body>
