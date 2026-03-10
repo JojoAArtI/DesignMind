@@ -130,7 +130,7 @@ export function getDomainProfile(domainId: string): DomainProfile | undefined {
 export function getAllDomains(): DomainProfile[] {
     return Object.values(domainProfiles);
 }
-
+    
 export function getDomainIds(): string[] {
     return Object.keys(domainProfiles);
 }
