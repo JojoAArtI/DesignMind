@@ -1,5 +1,5 @@
 import { DomainProfile } from './types.js';
- 
+
 const domainProfiles: Record<string, DomainProfile> = {
     logistics: {
         id: 'logistics',
