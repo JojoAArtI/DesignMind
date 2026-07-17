@@ -1,3 +1,5 @@
+![](https://komarev.com/ghpvc/?username=JojoAArtI)
+
 # DesignMind 
 
 **AI coding tools are aesthetically blind. DesignMind is how we give them sight.**
